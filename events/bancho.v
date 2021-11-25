@@ -93,6 +93,9 @@ pub fn handle_login(mut req ueda.Request) ([]byte, int) {
 		is_cached = true
 	}
 
+	bcrypt := f64(sw.elapsed().nanoseconds()) / f64(1_000_000)
+	bcrypt_rounded := int(bcrypt*math.pow(10, 5) + .5) / math.pow(10, 5)
+
 	login := data[2].split("|")
 
 	if login[3].split(":").len < 4 {
@@ -124,7 +127,7 @@ pub fn handle_login(mut req ueda.Request) ([]byte, int) {
 	ret << packet.friends_list(p.friends)
 	ret << packet.chan_info_end()
 	
-	ret << packet.announce("Login successful (${t_rounded}ms | CACHED: $is_cached)")
+	ret << packet.announce("Login successful (${t_rounded}ms (bcrypt took $bcrypt_rounded) | CACHED: $is_cached)")
 	log.debug("$p.username logged in. (authorization took ${t_rounded}ms)")
 	
 	p.login_time = time.now().unix_time()

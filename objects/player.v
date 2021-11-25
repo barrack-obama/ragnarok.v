@@ -117,6 +117,11 @@ pub fn (mut p Player) generate_token() {
 pub fn (mut p Player) join_channel(c &Channel) {}
 pub fn (mut p Player) leave_channel(c &Channel) {}
 
+pub fn (mut p Player) join_match(m &Match) {}
+pub fn (mut p Player) leave_match() {}
+
+pub fn (mut p Player) logout() {}
+
 pub fn (mut p Player) enqueue(b []byte) {
 	p.queue << b
 }
